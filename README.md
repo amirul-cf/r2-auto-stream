@@ -179,28 +179,6 @@ wrangler deploy --env preview
 | `CLOUDFLARE_ACCOUNT_ID` | Your Cloudflare account ID | ✅ |
 | `CLOUDFLARE_API_TOKEN` | API token with Stream permissions | ✅ |
 
-## Troubleshooting
-
-### Common Issues
-
-1. **"R2 bindings not configured"**
-   - Ensure all R2 secrets are set correctly
-   - Verify R2 bucket binding in `wrangler.jsonc`
-
-2. **"Cloudflare Account ID or API Token not configured"**
-   - Check that `CLOUDFLARE_API_TOKEN` secret is set
-   - Verify `CLOUDFLARE_ACCOUNT_ID` in `wrangler.jsonc`
-
-3. **Queue messages being retried**
-   - Check Cloudflare Workers logs: `wrangler tail`
-   - Verify Stream API permissions in your API token
-
-### Monitoring
-
-- **View logs**: `wrangler tail`
-- **Check queue status**: Cloudflare Dashboard → Queues
-- **Monitor Stream uploads**: Cloudflare Dashboard → Stream
-
 ## Development
 
 ### Local Development
