@@ -58,18 +58,19 @@ wrangler queues create video-processing-queue
 
 1. Go to Cloudflare Dashboard → R2 → Manage R2 API tokens
 2. Create a new R2 API token with:
-   - **Permissions**: Object Read & Write
-   - **Bucket**: Your source bucket
+    - **Permissions**: Object Read & Write
+    - **Bucket**: Your source bucket
 3. Note down the **Access Key ID** and **Secret Access Key**
 
 ### 5. Create Cloudflare API Token for Stream
 
-1. Go to Cloudflare Dashboard → My Profile → API Tokens
+1. Go to Cloudflare Dashboard → Manage Account (on the left sidebar) → Account API Tokens
+    - or go to Cloudflare Dashboard → My Profile → API Tokens
 2. Create a custom token with:
-   - **Permissions**: 
-     - Account - Cloudflare Stream:Edit
-   - **Account Resources**: Include your account
-   - **Zone Resources**: All zones (if needed)
+    - **Permissions**: 
+      - Account - Cloudflare Stream:Edit
+    - **Account Resources**: Include your account
+    - **Zone Resources**: All zones (if needed)
 3. Note down the **API Token**
 
 ### 6. Configure Environment Variables
