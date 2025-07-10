@@ -45,8 +45,8 @@ wrangler r2 bucket create your-source-bucket
 
 #### Create KV Namespace
 ```bash
-wrangler kv:namespace create "STREAM_URLS"
-wrangler kv:namespace create "STREAM_URLS" --preview
+wrangler kv namespace create "STREAM_URLS"
+wrangler kv namespace create "STREAM_URLS" --preview
 ```
 
 #### Create Queue
@@ -166,7 +166,7 @@ wrangler deploy --env preview
 
 3. **Retrieve Stream URLs**:
    ```bash
-   wrangler kv:key get "video.mp4" --binding STREAM_URLS
+   wrangler kv key get "video.mp4" --binding STREAM_URLS
    ```
 
 ## Environment Variables Reference
