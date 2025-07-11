@@ -83,13 +83,6 @@ Create or update your `wrangler.jsonc` file:
   "main": "src/index.ts",
   "compatibility_date": "2024-01-01",
   "compatibility_flags": ["nodejs_compat"],
-  "queue_consumers": [
-    {
-      "queue": "video-processing-queue",
-      "max_batch_size": 10,
-      "max_batch_timeout": 5
-    }
-  ],
   "kv_namespaces": [
     {
       "binding": "STREAM_URLS",
@@ -102,10 +95,7 @@ Create or update your `wrangler.jsonc` file:
       "binding": "R2_SOURCE_BUCKET",
       "bucket_name": "your-source-bucket"
     }
-  ],
-  "vars": {
-    "CLOUDFLARE_ACCOUNT_ID": "your-account-id"
-  }
+  ]
 }
 ```
 
