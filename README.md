@@ -39,17 +39,20 @@ wrangler login
 ### 3. Create Required Cloudflare Resources
 
 #### Create R2 Bucket
+
 ```bash
 wrangler r2 bucket create your-source-bucket
 ```
 
 #### Create KV Namespace
+
 ```bash
 wrangler kv namespace create "STREAM_URLS"
 wrangler kv namespace create "STREAM_URLS" --preview
 ```
 
 #### Create Queue
+
 ```bash
 wrangler queues create video-processing-queue
 ```
@@ -58,19 +61,19 @@ wrangler queues create video-processing-queue
 
 1. Go to Cloudflare Dashboard → R2 → Manage R2 API tokens
 2. Create a new R2 API token with:
-    - **Permissions**: Object Read & Write
-    - **Bucket**: Your source bucket
+   - **Permissions**: Object Read & Write
+   - **Bucket**: Your source bucket
 3. Note down the **Access Key ID** and **Secret Access Key**
 
 ### 5. Create Cloudflare API Token for Stream
 
 1. Go to Cloudflare Dashboard → Manage Account (on the left sidebar) → Account API Tokens
-    - or go to Cloudflare Dashboard → My Profile → API Tokens
+   - or go to Cloudflare Dashboard → My Profile → API Tokens
 2. Create a custom token with:
-    - **Permissions**: 
-      - Account - Cloudflare Stream:Edit
-    - **Account Resources**: Include your account
-    - **Zone Resources**: All zones (if needed)
+   - **Permissions**:
+     - Account - Cloudflare Stream:Edit
+   - **Account Resources**: Include your account
+   - **Zone Resources**: All zones (if needed)
 3. Note down the **API Token**
 
 ### 6. Configure Environment Variables
@@ -79,23 +82,26 @@ Create or update your `wrangler.jsonc` file:
 
 ```jsonc
 {
-  "name": "auto-stream",
-  "main": "src/index.ts",
-  "compatibility_date": "2024-01-01",
-  "compatibility_flags": ["nodejs_compat"],
-  "kv_namespaces": [
-    {
-      "binding": "STREAM_URLS",
-      "id": "your-kv-namespace-id",
-      "preview_id": "your-preview-kv-namespace-id"
-    }
-  ],
-  "r2_buckets": [
-    {
-      "binding": "R2_SOURCE_BUCKET",
-      "bucket_name": "your-source-bucket"
-    }
-  ]
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "auto-stream",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-07-09",
+	"observability": {
+		"enabled": true
+	},
+	"workers_dev": false,
+	"r2_buckets": [
+		{
+			"binding": "VIDEO",
+			"bucket_name": "video"
+		}
+	],
+	"kv_namespaces": [
+		{
+			"binding": "STREAM_URLS",
+			"id": "<KV_ID>"
+		}
+	]
 }
 ```
 
@@ -133,11 +139,13 @@ wrangler r2 bucket notification create your-source-bucket \
 ## Deployment
 
 ### Deploy to Production
+
 ```bash
 wrangler deploy
 ```
 
 ### Deploy to Development/Preview
+
 ```bash
 wrangler deploy --env preview
 ```
@@ -145,11 +153,13 @@ wrangler deploy --env preview
 ## Usage
 
 1. **Upload a video file to your R2 bucket**:
+
    ```bash
    wrangler r2 object put your-source-bucket/video.mp4 --file ./video.mp4
    ```
 
 2. **The system will automatically**:
+
    - Detect the new file via R2 event notification
    - Generate a presigned URL for the file
    - Create a Stream video asset using the presigned URL
@@ -162,28 +172,31 @@ wrangler deploy --env preview
 
 ## Environment Variables Reference
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `R2_SOURCE_BUCKET` | R2 bucket binding for source videos | ✅ |
-| `R2_ACCESS_KEY_ID` | R2 API access key ID | ✅ |
-| `R2_SECRET_ACCESS_KEY` | R2 API secret access key | ✅ |
-| `CLOUDFLARE_ACCOUNT_ID` | Your Cloudflare account ID | ✅ |
-| `CLOUDFLARE_API_TOKEN` | API token with Stream permissions | ✅ |
-| `ALLOWED_ORIGINS` | Only allow specific origins to have stream access. Seperated by comma. Example: "sample.com,stream.sample.com" | ✅ |
+| Variable                | Description                                                                                                    | Required |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------- | -------- |
+| `R2_SOURCE_BUCKET`      | R2 bucket binding for source videos                                                                            | ✅       |
+| `R2_ACCESS_KEY_ID`      | R2 API access key ID                                                                                           | ✅       |
+| `R2_SECRET_ACCESS_KEY`  | R2 API secret access key                                                                                       | ✅       |
+| `CLOUDFLARE_ACCOUNT_ID` | Your Cloudflare account ID                                                                                     | ✅       |
+| `CLOUDFLARE_API_TOKEN`  | API token with Stream permissions                                                                              | ✅       |
+| `ALLOWED_ORIGINS`       | Only allow specific origins to have stream access. Seperated by comma. Example: "sample.com,stream.sample.com" | ✅       |
 
 ## Development
 
 ### Local Development
+
 ```bash
 pnpm run dev
 ```
 
 ### Running Tests
+
 ```bash
 pnpm test
 ```
 
 ### Type Generation
+
 ```bash
 pnpm run cf-typegen
 ```
