@@ -72,6 +72,7 @@ export default {
 						name: objectKey,
 						bucket: env.R2_SOURCE_BUCKET,
 					},
+					allowedOrigins: env.ALLOWED_ORIGINS ? env.ALLOWED_ORIGINS.split(',') : ['*'],
 				});
 
 				if (streamCopy.uid) {

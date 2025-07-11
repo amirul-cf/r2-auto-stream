@@ -109,6 +109,7 @@ wrangler secret put R2_ACCESS_KEY_ID
 wrangler secret put R2_SECRET_ACCESS_KEY
 wrangler secret put CLOUDFLARE_ACCOUNT_ID
 wrangler secret put CLOUDFLARE_API_TOKEN
+wrangler secret put ALLOWED_ORIGINS
 ```
 
 ### 8. Configure R2 Event Notifications
@@ -168,6 +169,7 @@ wrangler deploy --env preview
 | `R2_SECRET_ACCESS_KEY` | R2 API secret access key | ✅ |
 | `CLOUDFLARE_ACCOUNT_ID` | Your Cloudflare account ID | ✅ |
 | `CLOUDFLARE_API_TOKEN` | API token with Stream permissions | ✅ |
+| `ALLOWED_ORIGINS` | Only allow specific origins to have stream access. Seperated by comma. Example: "sample.com,stream.sample.com" | ✅ |
 
 ## Development
 
